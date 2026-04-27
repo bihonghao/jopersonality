@@ -11,13 +11,10 @@ jopersonality/
       resume_agent.py
     services/
       resume_parser.py
-      settings_service.py
     schemas/
       candidate_profile.py
     main.py
     requirements.txt
-  frontend/
-    ...
 ```
 
 ## Installation
@@ -32,7 +29,7 @@ source .venv/bin/activate
 pip install -r backend/requirements.txt
 ```
 
-Create a `.env` file in the project root (optional; can also be set via setup endpoint):
+Create a `.env` file in the project root:
 
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
@@ -44,28 +41,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-## API Endpoints
-
-### `GET /settings/status`
-
-Returns OpenAI settings state:
-
-```json
-{
-  "openai_configured": true,
-  "key_status": "configured"
-}
-```
-
-### `POST /settings/openai-key`
-
-Saves API key locally for development (`.env`):
-
-```json
-{
-  "openai_api_key": "sk-..."
-}
-```
+## API Endpoint
 
 ### `POST /resume/analyze`
 
@@ -120,6 +96,6 @@ curl -X POST "http://localhost:8000/resume/analyze" \
 - Unsupported file types
 - Empty file uploads
 - Parsing failures for PDF/DOCX/TXT
-- Missing/invalid `OPENAI_API_KEY`
+- Missing `OPENAI_API_KEY`
 - Invalid/non-JSON model output
 - Schema validation failures

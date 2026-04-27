@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import json
+import os
 
 from openai import OpenAI
 from pydantic import ValidationError
 
 from backend.schemas.candidate_profile import CandidateProfile
-from backend.services.settings_service import get_openai_api_key
 
 
 class ResumeAgentError(Exception):
@@ -27,7 +27,7 @@ def _build_prompt(resume_text: str) -> str:
 def analyze_resume_text(resume_text: str) -> CandidateProfile:
     """Use OpenAI to convert resume text into the normalized candidate profile schema."""
 
-    api_key = get_openai_api_key()
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise ResumeAgentError("OPENAI_API_KEY is not set.")
 
